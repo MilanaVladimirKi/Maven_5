@@ -22,4 +22,29 @@ public class ProductRepositoryTest {
         Assertions.assertArrayEquals(expected, actual);
     }
 
+    @Test
+    public void successDelete() {
+        ProductRepository repo = new ProductRepository();
+        repo.save(item1);
+        repo.save(item2);
+        repo.save(item3);
+        repo.removeById(3);
+
+        Product[] expected = {item1, item2};
+        Product[] actual = repo.getItems();
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void unSuccessDelete() {
+        ProductRepository repo = new ProductRepository();
+        repo.save(item1);
+        repo.save(item2);
+        repo.save(item3);
+
+        Assertions.assertThrows(NotFoundException.class, ()-> {
+            repo.removeById(10);
+        });
+    }
+
 }
